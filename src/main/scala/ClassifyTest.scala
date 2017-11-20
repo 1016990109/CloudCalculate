@@ -17,7 +17,7 @@ object ClassifyTest {
   def main(args: Array[String]): Unit = {
     val spark = SparkSession.builder.appName("Classify").master("local").getOrCreate()
 
-    val testDF = spark.read.option("header", "false").csv("hdfs://master:9000/ml_test/newTrain")
+    val testDF = spark.read.option("header", "false").csv("hdfs://master:9000/" + C.mlPath + "/test")
 
     val parsedData = testDF.map(
       r => {
