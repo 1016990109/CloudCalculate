@@ -15,9 +15,9 @@ object DecisionTreeAccuracyTest {
       if (line.equals("1.0,1.0")) {
         TP += 1
       } else if (line.equals("0.0,1.0")) {
-        FP += 1
-      } else if (line.equals("1.0,0.0")) {
         FN += 1
+      } else if (line.equals("1.0,0.0")) {
+        FP += 1
       } else {
         TN += 1
       }

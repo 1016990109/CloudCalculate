@@ -8,14 +8,14 @@ object DecisionTreeModelTest {
   def main(args: Array[String]): Unit = {
     val spark = SparkSession.builder.appName("Classify").master("local").getOrCreate()
 
-    val data = spark.read.option("header", "false").csv("hdfs://master:9000/" + C.mlPath + "/logic_result")
+    val data = spark.read.option("header", "false").csv("hdfs://master:9000/" + C.mlPath + "/second_logistic_result")
     //predict,label,city_name
     val testData = data.map(row => {
       LabeledPoint(row.getString(1).toDouble, Vectors.dense(Array(row.getString(0).toDouble, row.getString(2).toDouble)))
     })(Encoders.kryo[LabeledPoint])
 
     //load model
-    val model = DecisionTreeModel.load(spark.sparkContext, "hdfs://master:9000/" + C.mlPath + "/decisionTreeModel")
+    val model = DecisionTreeModel.load(spark.sparkContext, "hdfs://master:9000/" + C.mlPath + "/decisionTreeModel2")
 
     //predict and write predict result
     testData.map(row => {

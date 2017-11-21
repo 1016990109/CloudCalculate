@@ -8,7 +8,7 @@ object DecisionTreeTest {
   def main(args: Array[String]): Unit = {
     val spark = SparkSession.builder.appName("Classify").master("local").getOrCreate()
 
-    val data = spark.read.option("header", "false").csv("hdfs://master:9000/" + C.mlPath + "/logic_result")
+    val data = spark.read.option("header", "false").csv("hdfs://master:9000/" + C.mlPath + "/decisionTree_logistic_result")
 
     //predict,label,city_name
     val trainData = data.map(row => {
@@ -18,6 +18,6 @@ object DecisionTreeTest {
     //2 is numClasses, gini is algorithm, 4 is maxDepth, 32 is maxBins
     val model = DecisionTree.trainClassifier(trainData.rdd, 2, Map[Int, Int](), "gini", 4, 32)
 
-    model.save(spark.sparkContext, "hdfs://master:9000/" + C.mlPath + "/decisionTreeModel")
+    model.save(spark.sparkContext, "hdfs://master:9000/" + C.mlPath + "/decisionTreeModel2")
   }
 }

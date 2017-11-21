@@ -11,13 +11,13 @@ object LogicRegressionAccuracyTest {
 
 
   def main(args: Array[String]): Unit = {
-    spark.read.textFile("hdfs://master:9000/" + C.mlPath + "/logic_result").foreach(line => {
+    spark.read.textFile("hdfs://master:9000/" + C.mlPath + "/second_logistic_result").foreach(line => {
       if (line.startsWith("1.0,1.0")) {
         TP += 1
       } else if (line.startsWith("0.0,1.0")) {
-        FP += 1
-      } else if (line.startsWith("1.0,0.0")) {
         FN += 1
+      } else if (line.startsWith("1.0,0.0")) {
+        FP += 1
       } else {
         TN += 1
       }

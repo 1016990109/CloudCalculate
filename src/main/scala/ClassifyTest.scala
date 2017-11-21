@@ -34,14 +34,14 @@ object ClassifyTest {
     val scaled_data = parsedData.map(point => NewLabeledPoint(LabeledPoint(point.labeledPoint.label, scaler.transform(point.labeledPoint.features)), point.city))(Encoders.kryo[NewLabeledPoint])
 
     //load model
-    val model = LogisticRegressionModel.load(spark.sparkContext, "hdfs://master:9000/" + C.mlPath + "/logicModel").setThreshold(0.5)
+    val model = LogisticRegressionModel.load(spark.sparkContext, "hdfs://master:9000/" + C.mlPath + "/logisticRegression").setThreshold(0.5)
 
     //predict and write
     val predictionAndLabels = scaled_data.map(point =>
       (model.predict(point.labeledPoint.features), point.labeledPoint.label, point.city)
     )(Encoders.kryo[(Double, Double, String)])
     //file write: predict, real_label, city_name
-    predictionAndLabels.map(r => r._1.toString + "," + r._2.toString + "," + r._3.toString)(Encoders.kryo[String]).rdd.saveAsTextFile("hdfs://master:9000/ml/logic_result")
+//    predictionAndLabels.map(r => r._1.toString + "," + r._2.toString + "," + r._3.toString)(Encoders.kryo[String]).rdd.saveAsTextFile("hdfs://master:9000/ml/decisionTree_logistic_result")
 
     //calculate pr and roc
     val socoreAndLabels = scaled_data.map {

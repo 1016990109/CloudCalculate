@@ -28,6 +28,6 @@ object Classify {
 
     val model_log = new LogisticRegressionWithLBFGS().setNumClasses(2).run(scaled_data.rdd)
 
-    model_log.save(spark.sparkContext, "hdfs://master:9000/" + C.mlPath + "/logicModel")
+    model_log.save(spark.sparkContext, "hdfs://master:9000/" + C.mlPath + "/logisticRegression")
   }
 }
